@@ -1,0 +1,113 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import facadePattern from './Facade-Pattern-with-NgRx.png'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2023-04-05',
+  title: 'The Benefits of Using a Facade Service When Using NGRX',
+  description:
+    'When working with NGRX in Angular applications, using a facade service can help simplify your code and make it easier to manage your state. In this article, we will explore the benefits of using a facade service with NGRX and provide some best practices for implementing it in your applications.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={facadePattern} alt="Facade Pattern with NgRx" />
+
+If you've been working with NGRX for some time now, you've probably noticed that it can sometimes get a little messy, especially when dealing with complex state management. That's where facade services come into play. In this article, we'll dive into the benefits of using a facade service when using NGRX and provide some useful code examples to help you understand it better.
+
+## **1\. Simplifying State Management**
+
+When you're using NGRX, dealing with the store can become quite tricky, particularly when your application starts to grow. A facade service can help you simplify your state management by providing an abstraction layer between your components and the store.
+
+Instead of dispatching actions and selecting data directly from the store, you'll work with the facade service to interact with the state. This way, you can focus on your component's logic while the facade service handles the store interactions.
+
+For example, let's say you have a simple store with a list of items. Instead of directly selecting the items from the store like this:
+
+```typescript
+this.store.select((state) => state.items)
+```
+
+You would create a facade service to handle this interaction:
+
+```typescript
+class ItemsFacade {
+  constructor(private store: Store) {}
+
+  getItems() {
+    return this.store.select((state) => state.items)
+  }
+}
+```
+
+Now, you can simply use the `ItemsFacade` service to get the items in your component:
+
+```typescript
+class ItemsComponent {
+  constructor(private itemsFacade: ItemsFacade) {}
+
+  ngOnInit() {
+    this.items$ = this.itemsFacade.getItems()
+  }
+}
+```
+
+You can learn more about NGRX basics from this [**Beginner's Guide to NGRX**](https://bmdevservices.blog/a-beginners-guide-to-ngrx).
+
+## **2\. Encapsulating Store Logic**
+
+Facade services help you encapsulate store logic, making it easier to maintain and understand. This separation of concerns allows you to keep your components lean and focused on their core functionality, while the facade service handles the store-related logic.
+
+Consider a scenario where you need to dispatch an action to add an item to the list. Instead of dispatching the action directly from the component:
+
+```typescript
+class ItemsComponent {
+  constructor(private store: Store) {}
+
+  addItem(item) {
+    this.store.dispatch(new AddItem(item))
+  }
+}
+```
+
+You would use the facade service to encapsulate this logic:
+
+```typescript
+class ItemsFacade {
+  constructor(private store: Store) {}
+
+  addItem(item) {
+    this.store.dispatch(new AddItem(item))
+  }
+}
+```
+
+This way, your components remain focused on presentation and user interactions, while the facade service takes care of the state management.
+
+## **3\. Easier Testing**
+
+When you're working with NGRX, testing components that interact with the store can be challenging. By using a facade service, you can isolate the store interactions from your components, making it easier to test them.
+
+Since the facade service is responsible for handling the store logic, you can simply mock it during testing, allowing you to focus on testing your component's functionality without worrying about the store.
+
+## **4\. Improved Code Reusability**
+
+Facade services not only simplify your state management but also promote code reusability. By encapsulating store-related logic in a single place, you can easily reuse it across multiple components.
+
+For instance, if you have multiple components that need to interact with the list of items, you can use the same `ItemsFacade` service to handle the store interactions for all of them. This not only keeps your code DRY (Don't Repeat Yourself) but also makes it easier to maintain and update.
+
+## **5\. Scalability and Maintainability**
+
+As your application grows in size and complexity, using facade services with NGRX can significantly improve its scalability and maintainability. By organizing your state management logic in facade services, you can easily extend or modify the functionality of your application without affecting other parts of the codebase.
+
+For example, if you need to add new actions or modify the store's structure, you can do so within the facade service without having to update every component that interacts with the store. This makes it much easier to scale your application and adapt it to changing requirements.
+
+Additionally, by using a facade service, you can minimize the impact of changes to the store on your components. If the store's structure or the way data is accessed changes, you can update the facade service to accommodate these changes, ensuring that your components remain unaffected.
+
+In conclusion, facade services can greatly enhance your experience with NGRX by simplifying state management, encapsulating store logic, making testing easier, improving code reusability, and promoting scalability and maintainability. To learn more about NGRX and get a deeper understanding of how it works, check out this [**Beginner's Guide to NGRX**](https://bmdevservices.blog/a-beginners-guide-to-ngrx).
+
+If you're looking for professional assistance with your NGRX projects, don't hesitate to reach out to the experts at [**bmdevservices.com**](http://bmdevservices.com). They can provide you with invaluable guidance and support to ensure your project's success.

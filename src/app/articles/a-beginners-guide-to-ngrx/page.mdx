@@ -1,0 +1,220 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import angularNgrx from './angular-ngrx.jpeg'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2023-04-02',
+  title: "A Beginner's Guide to NGRX",
+  description:
+    'NGRX is a powerful state management library for Angular applications. In this article, we will explore the basics of NGRX and how to get started with it.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={angularNgrx} alt="NGRX" />
+
+When building complex web applications, managing state can be a challenging task. NGRX is a popular library for managing state in Angular applications using the Redux pattern. In this article, we will explore the core concepts of NGRX and provide a step-by-step guide to getting started with it.
+
+State management can be a challenging aspect of web application development, particularly in Angular applications. NGRX is a popular solution that makes managing state in Angular applications easier and more efficient. This blog post will walk you through the basics of NGRX, its core concepts, and provide you with some code snippets to get started. Let's dive in!
+
+### **What is NGRX?**
+
+NGRX is a library for Angular applications that provides reactive state management using the Redux pattern. It is built on top of RxJS, a library for reactive programming with JavaScript. NGRX allows you to manage your application state in a predictable and maintainable way, making it easier to develop complex Angular applications.
+
+### **Core Concepts**
+
+Before diving into NGRX, it is essential to understand its core concepts:
+
+1. **Store**: The store is a single source of truth for your application state. It is an immutable object that represents the state at any given point in time.
+2. **Actions**: Actions are plain JavaScript objects that represent different events or actions that can change the state of the application. They have a 'type' property to describe the action and an optional 'payload' property for additional data.
+3. **Reducers**: Reducers are pure functions that take the current state and an action as arguments and return a new state. They are responsible for changing the state based on the action type.
+4. **Selectors**: Selectors are functions that extract specific parts of the state for consumption in components. They provide a way to query the state without needing to know its structure.
+5. **Effects**: Effects are responsible for handling side effects, such as HTTP requests, in response to actions. They are based on observables and are used to interact with external services or APIs.
+
+### **Getting Started with NGRX**
+
+To get started with NGRX, you need to install the required packages:
+
+```bash
+npm install @ngrx/store @ngrx/effects @ngrx/store-devtools --save
+```
+
+Next, create a simple store for managing a list of items. First, define the state interface:
+
+```typescript
+// app.state.ts
+interface AppState {
+  items: Item[]
+}
+```
+
+Now, create an initial state for the store:
+
+```typescript
+// app.state.ts
+const initialState: AppState = {
+  items: [],
+}
+```
+
+Next, define the actions to add and remove items from the list:
+
+```typescript
+// item.actions.ts
+import { createAction, props } from '@ngrx/store'
+
+export const addItem = createAction('[Item] Add Item', props<{ item: Item }>())
+
+export const removeItem = createAction(
+  '[Item] Remove Item',
+  props<{ itemId: number }>(),
+)
+```
+
+Create a reducer function to handle the actions:
+
+```typescript
+// item.reducer.ts
+import { createReducer, on } from '@ngrx/store'
+import { addItem, removeItem } from './item.actions'
+
+export const itemReducer = createReducer(
+  initialState,
+  on(addItem, (state, { item }) => ({
+    ...state,
+    items: [...state.items, item],
+  })),
+  on(removeItem, (state, { itemId }) => ({
+    ...state,
+    items: state.items.filter((item) => item.id !== itemId),
+  })),
+)
+```
+
+Now, register the store and the reducer in your `app.module.ts`:
+
+```typescript
+// app.module.ts
+import { StoreModule } from '@ngrx/store';
+import { itemReducer } from './item.reducer';
+
+@NgModule({
+  imports: [
+    // ...
+    StoreModule.forRoot({ items: itemReducer }),
+  ],
+})
+export class
+```
+
+```typescript
+// app.module.ts
+import { StoreModule } from '@ngrx/store'
+import { itemReducer } from './item.reducer'
+
+@NgModule({
+  imports: [
+    // ...
+    StoreModule.forRoot({ items: itemReducer }),
+  ],
+})
+export class AppModule {}
+```
+
+Now, let's create a simple component that adds and removes items using the NGRX store:
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { addItem, removeItem } from './item.actions'
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+})
+export class AppComponent {
+  constructor(private store: Store) {}
+
+  addItem(item: Item) {
+    this.store.dispatch(addItem({ item }))
+  }
+
+  removeItem(itemId: number) {
+    this.store.dispatch(removeItem({ itemId }))
+  }
+}
+```
+
+In the component template, create a form for adding items and a list for displaying them:
+
+```xml
+<!-- app.component.html -->
+<form (ngSubmit)="addItem(newItem.value)">
+  <input #newItem type="text" placeholder="Enter new item" required />
+  <button type="submit">Add Item</button>
+</form>
+
+<ul>
+  <li *ngFor="let item of items$ | async">
+    {{ item.name }}
+    <button (click)="removeItem(item.id)">Remove</button>
+  </li>
+</ul>
+```
+
+Lastly, create a selector to extract the items from the state:
+
+```typescript
+// item.selectors.ts
+import { createSelector } from '@ngrx/store'
+
+export const selectItems = createSelector(
+  (state: AppState) => state.items,
+  (items: Item[]) => items,
+)
+```
+
+And use it in the component:
+
+```typescript
+// app.component.ts
+import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { addItem, removeItem } from './item.actions'
+import { selectItems } from './item.selectors'
+import { Observable } from 'rxjs'
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+})
+export class AppComponent implements OnInit {
+  items$: Observable<Item[]>
+
+  constructor(private store: Store) {}
+
+  ngOnInit() {
+    this.items$ = this.store.select(selectItems)
+  }
+
+  addItem(item: Item) {
+    this.store.dispatch(addItem({ item }))
+  }
+
+  removeItem(itemId: number) {
+    this.store.dispatch(removeItem({ itemId }))
+  }
+}
+```
+
+That's it! You now have a basic understanding of NGRX and how to use it in an Angular application. There's much more to learn, such as handling side effects with Effects and integrating with Angular Router, but this should give you a solid foundation to build upon.
+
+Happy coding!
+
+**Need help implementing NGRX in your Angular project?** Our experienced developers at [**BM Dev Services**](https://www.bmdevservices.com/) are here to help! Contact us for a consultation and let's make your application's state management a breeze.

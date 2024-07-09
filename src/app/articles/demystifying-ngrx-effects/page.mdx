@@ -1,0 +1,168 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import ngrxEffects from './ngrx-effects.jpeg'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2023-04-11',
+  title: 'Demystifying NgRx Effects',
+  description:
+    'NgRx Effects are a powerful feature of the NgRx library that allow you to manage side effects in your Angular applications. In this article, we will explore the core concepts of NgRx Effects and provide a step-by-step guide to getting started with them.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={ngrxEffects} alt="NGRX Effects" />
+
+NgRx is a powerful state management library for Angular applications, based on the principles of Redux. It provides a predictable state container, making it easier to manage and track application state changes. One of the core concepts of NgRx is Effects, which handle side effects such as API calls and other asynchronous tasks.
+
+In this blog post, we will explore how NgRx Effects files work and their purpose. We will dive into three different levels of complexity, from a straightforward example to more complex scenarios involving data retrieval from the store and combining multiple actions or HTTP requests.
+
+1. ### Straightforward Effect
+
+A basic NgRx Effect is simply an Observable that listens for a specific action and responds with a new action. Let's start by creating a simple effect that listens for a 'LOAD_DATA' action and, upon receiving it, dispatches a 'LOAD_DATA_SUCCESS' action with the fetched data.
+
+First, we will create the necessary actions:
+
+```typescript
+import { createAction, props } from '@ngrx/store'
+
+export const loadData = createAction('[Data] Load Data')
+export const loadDataSuccess = createAction(
+  '[Data] Load Data Success',
+  props<{ data: any[] }>(),
+)
+export const loadDataFailure = createAction(
+  '[Data] Load Data Failure',
+  props<{ error: any }>(),
+)
+```
+
+Now let's create a simple effect:
+
+```typescript
+import { Injectable } from '@angular/core'
+import { Actions, createEffect, ofType } from '@ngrx/effects'
+import { map, mergeMap, catchError } from 'rxjs/operators'
+import { DataService } from '../services/data.service'
+import * as DataActions from '../actions/data.actions'
+
+@Injectable()
+export class DataEffects {
+  loadData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DataActions.loadData),
+      mergeMap(() =>
+        this.dataService.fetchData().pipe(
+          map((data) => DataActions.loadDataSuccess({ data })),
+          catchError((error) => of(DataActions.loadDataFailure({ error }))),
+        ),
+      ),
+    ),
+  )
+
+  constructor(
+    private actions$: Actions,
+    private dataService: DataService,
+  ) {}
+}
+```
+
+In the example above, we've used `createEffect` to create an effect that listens for the `loadData` action. When this action is dispatched, the effect triggers the `dataService.fetchData()` method and, upon receiving the data, dispatches the `loadDataSuccess` action with the fetched data.
+
+1. ### Retrieving Data from the Store
+
+In some cases, you might need to retrieve data from the store to be used in the effect. To do this, we can use the [`store.select`](http://store.select)`()` method to get the required data.
+
+Let's modify the previous example by adding a userId parameter to the fetchData method:
+
+```typescript
+// data.actions.ts
+export const loadData = createAction(
+  '[Data] Load Data',
+  props<{ userId: number }>()
+);
+
+// data.effects.ts
+loadData$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(DataActions.loadData),
+    withLatestFrom(this.store.select(selectUserId)),
+    mergeMap(([action, userId]) =>
+      this.dataService.fetchData(userId).pipe(
+        map((data) => DataActions.loadDataSuccess({ data })),
+        catchError((error) => of(DataActions.loadDataFailure({ error })))
+      )
+    )
+  )
+);
+
+constructor(
+  private actions$: Actions,
+  private store: Store,
+  private dataService: DataService
+) {}
+```
+
+In this example, we've added the `withLatestFrom` operator to combine the latest value from the `selectUserId` selector with the `loadData` action. We then pass the `userId` parameter to the `fetchData` method.
+
+1. ### Combining Multiple Actions or HTTP Requests
+
+Sometimes, you might need to combine multiple actions or HTTP requests in a single effect. To achieve this, we can use the `forkJoin` or `zip` operators from RxJS.
+
+Let's create an effect that fetches data from two different API endpoints and combines the results before dispatching a single action.
+
+First, update the `loadDataSuccess` action to accept two data properties:
+
+```typescript
+// data.actions.ts
+export const loadDataSuccess = createAction(
+  '[Data] Load Data Success',
+  props<{ data1: any[]; data2: any[] }>(),
+)
+```
+
+Now, let's create an effect that combines the results of two HTTP requests:
+
+```typescript
+// data.effects.ts
+import { forkJoin } from 'rxjs';
+
+loadData$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(DataActions.loadData),
+    withLatestFrom(this.store.select(selectUserId)),
+    mergeMap(([action, userId]) =>
+      forkJoin([
+        this.dataService.fetchData1(userId),
+        this.dataService.fetchData2(userId),
+      ]).pipe(
+        map(([data1, data2]) =>
+          DataActions.loadDataSuccess({ data1, data2 })
+        ),
+        catchError((error) => of(DataActions.loadDataFailure({ error })))
+      )
+    )
+  )
+);
+
+constructor(
+  private actions$: Actions,
+  private store: Store,
+  private dataService: DataService
+) {}
+```
+
+In this example, we've used the `forkJoin` operator to make two HTTP requests simultaneously using `dataService.fetchData1()` and `dataService.fetchData2()` methods. Once both requests are completed, the effect combines the results into a single `loadDataSuccess` action.
+
+### Conclusion
+
+NgRx Effects are an essential part of state management in Angular applications, enabling you to manage side effects and asynchronous tasks seamlessly. In this blog post, we covered three different levels of complexity in NgRx Effects, from a basic example to more advanced scenarios involving data retrieval from the store and combining multiple actions or HTTP requests.
+
+Understanding these concepts will help you leverage the full power of NgRx and build more robust, maintainable, and scalable Angular applications.
+
+If you're looking for professional assistance with your NGRX projects, don't hesitate to reach out to the experts at [**bmdevservices.com**](http://bmdevservices.com). They can provide you with invaluable guidance and support to ensure your project's success.

@@ -1,0 +1,45 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import angular15 from './angular15.jpeg'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2023-04-02',
+  title: 'Angular 15 New Features',
+  description:
+    'Angular 15 is the latest version of the popular JavaScript framework. In this article, we will explore the new features and improvements introduced in Angular 15.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={angular15} alt="Angular 15" />
+
+The Angular team has been busy working on the latest release of Angular, and it's safe to say that Angular 15 comes packed with new features and updates. In this blog post, we'll dive into the details of the latest Angular release and explore its new features, including updates to the tooling side, automatic component imports, and improvements to the CLI.
+
+### Updates to Tooling Side
+
+In Angular version 14, the Angular team introduced experimental support for esbuild and ng build. This experiment aimed to reduce build times and simplify the build pipeline. With Angular 15, the team is expanding support for this feature to include experimental SASS, SVG templates, and file replacement support.
+
+To give these new features a try, all you need to do is update the builders in angular.json from build-angular browser to build-angular esbuild. If you encounter any issues, be sure to file an issue on GitHub.
+
+### Automatic Component Imports
+
+Have you ever encountered an error while building an Angular app due to an unimported component? With Angular 15, the Angular language service now automatically imports components via a quick fix in your editor. This feature works with both standalone components and module-based components, making your coding experience more seamless.
+
+### CLI Improvements
+
+In Angular 15, the CLI now supports generating a standalone component with the standalone flag. Additionally, the Angular team is streamlining the output of ng new by removing test.ts, polyfills.ts, and environments file. If you need to use the environments file in your project, create it, and add your configuration. Furthermore, polyfills can now be specified directly in the polyfills section of angular.json.
+
+### Roadmap for Angular
+
+The Angular team is always working on new improvements and updates for the platform, and with Angular 15, the focus is on three things. Firstly, the team is tackling improvements to the server-side rendering pipeline. Secondly, they are devoting time to exploring reactivity in Angular. Finally, the team is working on bringing more quality of life improvements across the board.
+
+If you're interested in keeping up with the progress of these efforts, be sure to stay tuned to the Angular roadmap.
+
+### Conclusion
+
+Angular 15 comes packed with new features and improvements, from updates to the tooling side to automatic component imports and CLI improvements. The Angular team is continuously working to bring new improvements to the platform, and we're excited to see what they have in store for us in future releases.
