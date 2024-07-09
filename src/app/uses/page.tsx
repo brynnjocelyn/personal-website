@@ -90,7 +90,7 @@ export default function Uses() {
             <br />
             <p>
               {' '}
-              I would watch the programming YouTuber's like{' '}
+              I would watch the programming YouTuber&apos;s like{' '}
               <em>
                 <a
                   href="https://www.youtube.com/c/theprimeagen"

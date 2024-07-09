@@ -77,22 +77,23 @@ export default function About() {
               light turns on. I was the latter.
             </p>
             <p>
-              I've always been a vivacious learner, falling asleep with a book
-              in my bed was the norm. I was the kid who would take apart the fan
-              just to see how it worked, and then put it back together again.
-              Out of high school, I persued a Managament Information Systems
-              degree. This was the first time I was introduced to programming
-              and I was hooked. I spent countless hours in the computer lab
-              working on projects.I wasn't a fan of the manditory english and
-              history classes. All I wanted to do was code.
+              I&apos;ve always been a vivacious learner, falling asleep with a
+              book in my bed was the norm. I was the kid who would take apart
+              the fan just to see how it worked, and then put it back together
+              again. Out of high school, I persued a Managament Information
+              Systems degree. This was the first time I was introduced to
+              programming and I was hooked. I spent countless hours in the
+              computer lab working on projects.I wasn&apos;t a fan of the
+              manditory english and history classes. All I wanted to do was
+              code.
             </p>
             <p>
               I ended up leaving to joing the United States Air Force as an
               F-15, A-10 and U-2 Avionics Technician. The systems troubleshoot
               skills that I learned in the Air Force have been invaluable in my
-              software development career. I've been able to quickly identify
-              and fix bugs in code, and I've been able to help my team members
-              do the same.
+              software development career. I&apos;ve been able to quickly
+              identify and fix bugs in code, and I&apos;ve been able to help my
+              team members do the same.
             </p>
             <p>
               Post military, I worked in both the mortgage and real estate sales
@@ -107,48 +108,50 @@ export default function About() {
               stack (Linux, Apache, MySQL, PHP), but quickly moved to building
               applications with the MEAN (MongoDb, Express, Angular, Node) stack
               . I was early on the Angular train, working with it since the
-              early days of AngularJS through it's current version. I've also
-              worked on several projects using React as well as projects using
-              Python, C#, MSSQL, Jenkins, Docker, AWS, you name it.
+              early days of AngularJS through it&apos;s current version.
+              I&apos;ve also worked on several projects using React as well as
+              projects using Python, C#, MSSQL, Jenkins, Docker, AWS, you name
+              it.
             </p>
             <p>
-              I've also worked as a technical lead, where I was responsible for
-              leading a team of developers in the development of a large scale
-              application. I was responsible for the architecture of the
+              I&apos;ve also worked as a technical lead, where I was responsible
+              for leading a team of developers in the development of a large
+              scale application. I was responsible for the architecture of the
               application, as well as the development of the front end and back
               end of the application. I was also responsible for the deployment
               of the application, as well as the maintenance of the application.
             </p>
             <p>
-              I find myself working on side projects in my free time, and I've
-              built several applications that are currently out in the wild. I
-              also run a pretty beefy homelab, where I have a full sized server
-              rack housing a mixture of 9 Dell Poweredge r730, r730xd and r630
-              servers, Tripplite USPs, a 64 port Arista 10Gb/40Gb layer 3
+              I find myself working on side projects in my free time, and
+              I&apos;ve built several applications that are currently out in the
+              wild. I also run a pretty beefy homelab, where I have a full sized
+              server rack housing a mixture of 9 Dell Poweredge r730, r730xd and
+              r630 servers, Tripplite USPs, a 64 port Arista 10Gb/40Gb layer 3
               switch, a custom firewall appliance runing pfSense routing
               software, and a Synology NAS. 6 of the servers are in a Proxmox
               cluster with Ceph shared storage running dozens of LXC containers
-              (including the hosting on of the very page you're reading), 2 are
-              running TrueNAS Scale and the last is a bare metal Ubuntu server.
+              (including the hosting on of the very page you&apos;re reading), 2
+              are running TrueNAS Scale and the last is a bare metal Ubuntu
+              server.
             </p>
             <p>
               I did this because I wanted to learn more about virtualization,
               containerization, networking, storage, and security. I also wanted
               to learn more about the software that I was using in my day job,
               and I wanted to be able to experiment with different
-              configurations without breaking anything in production. I've
-              learned a lot from this homelab, and I've been able to apply what
-              I've learned to my day job. I've also been able to help my team
-              members with their projects, and I've been able to help my friends
-              and family with their technology issues.
+              configurations without breaking anything in production. I&apos;ve
+              learned a lot from this homelab, and I&apos;ve been able to apply
+              what I&apos;ve learned to my day job. I&apos;ve also been able to
+              help my team members with their projects, and I&apos;ve been able
+              to help my friends and family with their technology issues.
             </p>
             <p>
               Today, I’m the founder of B&M Development Services, where we’re
               building the future of software development. I’m passionate about
               building products that make a difference in people’s lives. I’m
               also a mentor, speaker, and being that I am quite often the only
-              woman developer in the engineering room, I'm also an advocate for
-              diversity and inclusion of women in tech.
+              woman developer in the engineering room, I&apos;m also an advocate
+              for diversity and inclusion of women in tech.
             </p>
           </div>
         </div>
