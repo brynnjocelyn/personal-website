@@ -32,14 +32,14 @@ const initialState = {
 }
 
 function Newsletter() {
-  const [state, formAction] = useFormState(
+  /* const [state, formAction] = useFormState(
     addInfoToNewsLetterList,
     initialState,
-  )
+  ) */
   return (
     <form
       className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40"
-      action={formAction}
+      // action={formAction}
     >
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         <MailIcon className="h-6 w-6 flex-none" />
