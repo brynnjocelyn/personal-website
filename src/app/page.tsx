@@ -17,6 +17,7 @@ import image5 from '@/images/jocelyninvegas_S3bknight-personal-photosIMG_3632.JP
 import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 import { Button } from '@/components/Button'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -277,6 +278,7 @@ export default async function Home() {
           </div>
         </div>
       </Container>
+      <SpeedInsights />
     </>
   )
 }
