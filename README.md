@@ -8,7 +8,7 @@ This is true. I have a **TON** of [Angular](https://angular.dev) experience, but
 At the end of the day, I'm a software developer and I love building useful things with software and a framework or library
 is simply a tool to help you build.
 
-![Toolbelt full of tools](https://stock.adobe.com/images/tool-belt/90483284)
+![Toolbelt full of tools](https://m.media-amazon.com/images/I/611oxfcdJmL.__AC_SX300_SY300_QL70_FMwebp_.jpg)
 
 A good craftsman has many tools in thier toolbelt and whilst I don't
 get the opportunity to work with Nextjs professionally, I like to pull it out and sharpen my tools
