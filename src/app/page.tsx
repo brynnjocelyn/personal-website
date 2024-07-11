@@ -4,16 +4,11 @@ import clsx from 'clsx'
 
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
-import {
-  GitHubIcon,
-  InstagramIcon,
-  LinkedInIcon,
-  XIcon,
-} from '@/components/SocialIcons'
-import logoAirbnb from '@/images/logos/airbnb.svg'
-import logoFacebook from '@/images/logos/facebook.svg'
-import fannieMaeLogo from '@/images/logos/fannie-mae-2.svg'
-import finraLogo from '@/images/logos/finra.jpg'
+import { GitHubIcon, LinkedInIcon, XIcon } from '@/components/SocialIcons'
+import semanticBitsLogo from '@/images/logos/company_logos/semanticbits.png'
+import allegiantLogo from '@/images/logos/company_logos/allegiant.png'
+import clickfoxLogo from '@/images/logos/company_logos/clickfox.jpeg'
+import draftopsLogo from '@/images/logos/company_logos/draftops.jpeg'
 import image1 from '@/images/black_girl_coding.png'
 import image2 from '@/images/Girl_Programming.png'
 import image3 from '@/images/bm-devservies-logo-full-color-removebg.png'
@@ -135,35 +130,43 @@ function Role({ role }: { role: Role }) {
 function Resume() {
   let resume: Array<Role> = [
     {
-      company: 'Fannie Mae',
-      title: 'Senior Software Engineer',
-      logo: fannieMaeLogo,
-      start: '2023',
+      company: 'B&M Development Services',
+      title: 'Founder & CEO',
+      logo: image3,
+      start: '2019',
       end: {
         label: 'Present',
         dateTime: new Date().getFullYear().toString(),
       },
     },
     {
-      company: 'Finra',
+      company: 'SemanticBits',
       title: 'Senior Software Engineer',
-      logo: finraLogo,
-      start: '2023',
-      end: '2023',
+      logo: semanticBitsLogo,
+      start: '2017',
+      end: '2018',
     },
     {
-      company: 'Facebook',
-      title: 'iOS Software Engineer',
-      logo: logoFacebook,
-      start: '2011',
-      end: '2014',
+      company: 'Clickfox',
+      title: 'Senior Software Engineer',
+      logo: clickfoxLogo,
+      start: '2016',
+      end: '2017',
+    },
+
+    {
+      company: 'Emil Interactive Gaming',
+      title: 'UI/UX Engineer',
+      logo: draftopsLogo,
+      start: 'June 2015',
+      end: 'Dec 2015',
     },
     {
-      company: 'Starbucks',
-      title: 'Shift Supervisor',
-      logo: logoAirbnb,
-      start: '2008',
-      end: '2011',
+      company: 'Allegiant Travel Company',
+      title: 'UI/UX Engineer',
+      logo: allegiantLogo,
+      start: 'Jan 2015',
+      end: 'June 2015',
     },
   ]
 
