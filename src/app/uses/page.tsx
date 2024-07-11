@@ -93,11 +93,11 @@ export default function Uses() {
             room for a third window for reference material.
           </Tool>
           <Tool title="Asus VS278 27inch monitor">
-            Honestly, there's nothing special about this monitor. It's just a 27
-            inch monitor that I use in portrait mode as my secondary monitor.
-            The 49 inch monitor is great for having multiple windows open side
-            by side but I like to have a secondary monitor in portrait mode for
-            reading documentation and reference material.
+            Honestly, there&apos;s nothing special about this monitor. It&apos;s
+            just a 27 inch monitor that I use in portrait mode as my secondary
+            monitor. The 49 inch monitor is great for having multiple windows
+            open side by side but I like to have a secondary monitor in portrait
+            mode for reading documentation and reference material.
           </Tool>
           <Tool title="Logi C920 Webcam">
             Working remotely since 2016 has meant that I’ve spent a lot of time
@@ -112,8 +112,8 @@ export default function Uses() {
             is the one that I’ve stuck with. I love the quality of the video and
             the fact that it has a built-in microphone. I’ve used it for
             everything from video calls to recording videos and I’ve always been
-            impressed with the quality. I've since bought several of them for my
-            family members to use as well.
+            impressed with the quality. I&apos;ve since bought several of them
+            for my family members to use as well.
           </Tool>
           <Tool title="WASD V2 104-Key Custom Mechanical Keyboard">
             For the longest time I used the Apple Magic Keyboard. I just didn’t
@@ -141,8 +141,8 @@ export default function Uses() {
               these
             </a>{' '}
             back when I was using the Apple Magic Keyboard and I just never
-            stopped. I use them exclusively now and I haven't used a mouse in
-            close to a decade.
+            stopped. I use them exclusively now and I haven&apos;t used a mouse
+            in close to a decade.
           </Tool>
           <Tool title="HAG Capisco Adjustable Standing Desk Chair">
             I’ve had this{' '}
@@ -207,11 +207,11 @@ export default function Uses() {
               This was a few years ago and I’m never going back. The speed of
               use, plus the plugin ecosystem allowing for you to set up your
               editor in a way that exactly fits the way that you want to work is
-              just a better development experience for me. There isn't a feature
-              in my personal workflow that VSCode has that I can't replicate in
-              NeoVim. Plus the portability of being able to use my same setup on
-              any of my Proxmox servers, Linux containers and Virtual Machines I
-              can't see myself ever giving up NeoVim
+              just a better development experience for me. There isn&apos;t a
+              feature in my personal workflow that VSCode has that I can&apos;t
+              replicate in NeoVim. Plus the portability of being able to use my
+              same setup on any of my Proxmox servers, Linux containers and
+              Virtual Machines I can&apos;t see myself ever giving up NeoVim
             </p>
           </Tool>
           <Tool title="iTerm2">
@@ -226,11 +226,12 @@ export default function Uses() {
             I’ve been using it for a while. I love the fact that it’s open
             source and that it’s super customizable. I’ve used it for everything
             from basically living in it as my editing environment using NeoVim
-            to running scripts and ssh'ing into servers to manage them. I know
-            there are others out there but I’ve never had a reason to switch.
+            to running scripts and ssh&apos;ing into servers to manage them. I
+            know there are others out there but I’ve never had a reason to
+            switch.
           </Tool>
           <Tool title="Tmux">
-            I couldn't mention iTerm2 without mentioning{' '}
+            I couldn&apos;t mention iTerm2 without mentioning{' '}
             <a
               href="https://github.com/tmux/tmux/wiki"
               target="_blank"
@@ -241,10 +242,10 @@ export default function Uses() {
             </a>
             . I started using Tmux a few years ago and I’ve never looked back. I
             love the fact that I can split my terminal into multiple panes and
-            that I can detach and reattach to a session. I've customized it to
-            my liking and I use plugins like tmux-resurrect and tmux-continuum
-            to automatically save my sessions and restore them after a reboot. I
-            can't imagine working without it.
+            that I can detach and reattach to a session. I&apos;ve customized it
+            to my liking and I use plugins like tmux-resurrect and
+            tmux-continuum to automatically save my sessions and restore them
+            after a reboot. I can&apos;t imagine working without it.
           </Tool>
           <Tool title="Proxmox">
             I’ve been using{' '}
@@ -314,9 +315,9 @@ export default function Uses() {
             flexibility of it and the fact that I can just throw data into it to
             spin up a prototype super quickly, yet it can also scale and is
             powerful enough to handle complex queries and large datasets. I’ve
-            been using it for years now and it's a go-to tool for me depending
-            on the project. Although lately I've been using PocketBase for my
-            personal projects.
+            been using it for years now and it&apos;s a go-to tool for me
+            depending on the project. Although lately I&apos;ve been using
+            PocketBase for my personal projects.
           </Tool>
           <Tool title="PocketBase">
             I got on the{' '}
@@ -329,11 +330,12 @@ export default function Uses() {
             </a>{' '}
             train about a year ago and I’ve really enjoyed the experience. I’ve
             been using it for all of my personal projects and I find that it
-            makes spinning up a self-hosted database super easy. It's written in
-            Go and it's super fast and lightweight. There's also a javascript
-            sdk that you can use to interact with the database from your
-            frontend applications, so I've used it to make "backendless"
-            applications where the frontend talks directly to the database.
+            makes spinning up a self-hosted database super easy. It&apos;s
+            written in Go and it&apos;s super fast and lightweight. There&apos;s
+            also a javascript sdk that you can use to interact with the database
+            from your frontend applications, so I&apos;ve used it to make
+            &apos;backendless&apos; applications where the frontend talks
+            directly to the database.
           </Tool>
           <Tool title="Golang">
             I started using{' '}
@@ -375,11 +377,12 @@ export default function Uses() {
               PHP
             </a>{' '}
             was the first language that I learned. I used it for a few years
-            before I moved on to other languages and I haven't used it in a
-            while. I still have a soft spot for it. I keep hearing that it's
-            constantly improving and projects like Laravel are doing some really
-            cool stuff with it. I can't see myself going back to it for any
-            serious projects but I still have a lot of respect for it.
+            before I moved on to other languages and I haven&apos;t used it in a
+            while. I still have a soft spot for it. I keep hearing that
+            it&apos;s constantly improving and projects like Laravel are doing
+            some really cool stuff with it. I can&apos;t see myself going back
+            to it for any serious projects but I still have a lot of respect for
+            it.
           </Tool>
           <Tool title="Nginx">
             I’ve been using{' '}
@@ -391,11 +394,12 @@ export default function Uses() {
               Nginx{' '}
             </a>{' '}
             for many years now and I love it. I’ve used it to serve static
-            sites, it's my current main reverse proxy server to the multitude of
-            services that I run in my sizeable homelab, and I use it as a load
-            balancer between servers. I loved the relative simplicity of the
-            configuration and the fact that it’s super fast. I’ve never run into
-            a situation where I couldn’t do what I needed to do with it.
+            sites, it&apos;s my current main reverse proxy server to the
+            multitude of services that I run in my sizeable homelab, and I use
+            it as a load balancer between servers. I loved the relative
+            simplicity of the configuration and the fact that it’s super fast.
+            I’ve never run into a situation where I couldn’t do what I needed to
+            do with it.
           </Tool>
           <Tool title="Caddy">
             I recently got turned on to{' '}
@@ -438,7 +442,7 @@ export default function Uses() {
             search my computer and I been vey happy with it.
           </Tool>
           <Tool title="Obsidian">
-            I read a book about a year ago called "
+            I read a book about a year ago called &apos;
             <a
               href="https://www.buildingasecondbrain.com/book"
               target="_blank"
@@ -448,10 +452,10 @@ export default function Uses() {
               Building a Second Brain: A Proven Method to Organise Your Digital
               Life and Unlock Your Creative Potential
             </a>
-            " by Tiago Forte and it really resonated with me. I learned about
-            his PARA method for organizing notes as well as the Zettelkasten
-            method and landed on a hybrid system between the two that works for
-            me really well.
+            &apos; by Tiago Forte and it really resonated with me. I learned
+            about his PARA method for organizing notes as well as the
+            Zettelkasten method and landed on a hybrid system between the two
+            that works for me really well.
             <br />I had never had a really solid note taking program until I
             started using Obsidian. I love the fact that it’s just a bunch of
             markdown files and that I can use my own file system to organize
@@ -466,17 +470,18 @@ export default function Uses() {
             <br />
             With everything being local and only markdown files, that meant that
             I could also use my go-to NeoVim editor to be able to take notes
-            right in the same terminal that I'm working in as thoughts or little
-            code snippets that I'd like to save happen throughout the day. I
-            organize all of my projects in it and it houses all of my knowledge
-            bases in one susinc place. The ability to link note together via
-            taggin and also visualize those connections leading to creative
-            ideas sparking into reality has been a true game changer for me.
+            right in the same terminal that I&apos;m working in as thoughts or
+            little code snippets that I&apos;d like to save happen throughout
+            the day. I organize all of my projects in it and it houses all of my
+            knowledge bases in one susinc place. The ability to link note
+            together via taggin and also visualize those connections leading to
+            creative ideas sparking into reality has been a true game changer
+            for me.
             <br />
             I’ve been using it for a few months now and have pulled in all of
-            the various notes from the multitude of systems that I've used over
-            the years to record my thoughts and the insights just for that
-            activety has blown me away. I couldn't be more happy with it.
+            the various notes from the multitude of systems that I&apos;ve used
+            over the years to record my thoughts and the insights just for that
+            activety has blown me away. I couldn&apos;t be more happy with it.
           </Tool>
           <div id="syncthing" />
           <Tool title="Syncthing">
