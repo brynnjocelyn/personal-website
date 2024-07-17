@@ -183,7 +183,7 @@ function Resume() {
         ))}
       </ol>
       <Button
-        href="./jocelyn-resume.pdf"
+        href="./jocelyn-knight-resume.pdf"
         variant="secondary"
         className="group mt-6 w-full"
         download
