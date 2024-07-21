@@ -1,0 +1,166 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import ngrxReducer from './ngrx_reducer.jpg'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2024-07-21',
+  title: 'Reducers in NGRX: Tips for Writing Maintainable Reducers',
+  description:
+    'Reducers are a critical part of NGRX applications. In this article, we will explore some best practices for writing maintainable reducers in NGRX.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={ngrxReducer} alt="NGRX" />
+
+When working with NGRX in Angular applications, reducers play a crucial role in managing the state of your application. Reducers are pure functions that take the current state and an action as arguments and return a new state. In this article, we will explore some tips for writing maintainable reducers in NGRX.
+Managing state in a complex Angular application can be challenging, but NGRX provides a powerful solution with its Redux-inspired state management pattern. At the heart of this pattern lies the reducer function, which is responsible for managing the state transitions based on dispatched actions. Writing maintainable reducers is crucial for keeping your codebase clean, understandable, and scalable. In this blog post, we'll explore some best practices for writing maintainable reducers in NGRX using the newer `on` function.
+
+#### 1. **Keep Reducers Pure**
+
+Reducers should be pure functions. This means they should always return the same output given the same input and should not cause any side effects. A pure reducer function takes the current state and an action as arguments and returns a new state without mutating the original state.
+
+```typescript
+import { createReducer, on } from '@ngrx/store';
+import { increment, decrement } from './counter.actions';
+
+export const initialState = { count: 0 };
+
+const _counterReducer = createReducer(
+  initialState,
+  on(increment, state => ({ ...state, count: state.count + 1 })),
+  on(decrement, state => ({ ...state, count: state.count - 1 }))
+);
+
+export function counterReducer(state, action) {
+  return _counterReducer(state, action);
+}
+```
+
+#### 2. **Use Immutable Data Structures**
+
+Ensure that the state is immutable by using techniques like object spread (`{ ...state }`) or utility libraries like `immer` to handle state updates. This helps in maintaining predictability and avoiding unintended side effects.
+
+```typescript
+import { updateUser } from './user.actions';
+
+const _userReducer = createReducer(
+  initialState,
+  on(updateUser, (state, { id, changes }) => ({
+    ...state,
+    users: state.users.map(user =>
+      user.id === id ? { ...user, ...changes } : user
+    )
+  }))
+);
+
+export function userReducer(state, action) {
+  return _userReducer(state, action);
+}
+```
+
+#### 3. **Handle Each Action Separately**
+
+Avoid handling multiple actions in a `on` function. This can make the reducer harder to read and maintain. Instead, handle each action type separately to keep the logic straightforward and easy to follow.
+
+```typescript
+// reducers/todo.reducer.ts
+
+import { addTodo, removeTodo } from './todo.actions';
+
+const _todoReducer = createReducer(
+  initialState,
+  on(addTodo, (state, { todo }) => ({
+    ...state,
+    todos: [...state.todos, todo]
+  })),
+  on(removeTodo, (state, { id }) => ({
+    ...state,
+    todos: state.todos.filter(todo => todo.id !== id)
+  }))
+);
+
+export function todoReducer(state, action) {
+  return _todoReducer(state, action);
+}
+```
+
+#### 4. **Use Action Constants and Action Creators**
+
+Define action types as constants and use action creators to encapsulate action object creation. This helps in reducing typos and makes actions easier to manage and refactor.
+
+```typescript
+// todo.action-types.ts
+export const ADD_TODO = '[Todo] Add Todo';
+export const REMOVE_TODO = '[Todo] Remove Todo';
+
+// todo.actions.ts
+import { createAction, props } from '@ngrx/store';
+
+export const addTodo = createAction(ADD_TODO, props<{ todo: Todo }>());
+export const removeTodo = createAction(REMOVE_TODO, props<{ id: number }>());
+```
+
+#### 5. **Keep Reducers Focused**
+
+Each reducer should focus on a specific slice of the state. Avoid writing monolithic reducers that manage the entire state tree. Instead, use combineReducers to split your state management into smaller, more focused reducers.
+
+```typescript
+// reducers/index.ts
+
+import { combineReducers } from '@ngrx/store';
+import { todosReducer } from './todos.reducer';
+import { userReducer } from './user.reducer';
+
+export const rootReducer = combineReducers({
+  todos: todosReducer,
+  user: userReducer
+});
+```
+
+#### 6. **Leverage Selector Functions**
+
+Selector functions help in encapsulating and reusing state selection logic. This not only keeps the components cleaner but also ensures that state access logic is centralized and easy to update.
+
+```typescript
+// todos.selectors.ts
+
+import { createSelector } from '@ngrx/store';
+
+export const selectTodosState = (state: AppState) => state.todos;
+
+export const selectAllTodos = createSelector(
+  selectTodosState,
+  (todosState) => todosState.todos
+);
+```
+
+#### 7. **Write Unit Tests for Reducers**
+
+Unit tests are crucial for ensuring that reducers behave correctly. Writing tests for each action type helps in catching bugs early and ensures that the reducer logic remains correct as the application evolves.
+
+```typescript
+// todos.reducer.spec.ts
+
+describe('Todos Reducer', () => {
+  it('should add a todo', () => {
+    const initialState = { todos: [] };
+    const action = addTodo({ todo: { id: 1, title: 'Test Todo' } });
+    const state = todosReducer(initialState, action);
+
+    expect(state.todos.length).toBe(1);
+    expect(state.todos[0].title).toBe('Test Todo');
+  });
+
+  // Other test cases
+});
+```
+
+#### Conclusion
+
+Writing maintainable reducers in NGRX is key to managing state effectively in Angular applications. By keeping reducers pure, using immutable data structures, handling each action separately, leveraging action creators, keeping reducers focused, utilizing selector functions, and writing unit tests, you can ensure that your state management remains clean, predictable, and easy to maintain. Following these best practices will help you build scalable and maintainable applications with NGRX.
