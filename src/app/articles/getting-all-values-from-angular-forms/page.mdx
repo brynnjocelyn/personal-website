@@ -1,0 +1,79 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import angularForms from './angular-forms.png'
+import screenshot1 from './Screenshot1.png'
+import screenshot2 from './Screenshot2.png'
+import screenshot3 from './Screenshot3.png'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2024-07-30',
+  title: 'Getting all values of a FormGroup including disabled FormControls',
+  description:
+    'The difference between accessing the .value property on a FormGroup and calling the getRawValue() method on a FormGroup',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={angularForms} alt="NGRX" />
+
+Ever wondered what the difference was between accessing the `.value` property on a [FormGroup](https://angular.dev/api/forms/FormGroup) and calling the `getRawValue()` method on a [FormGroup](https://angular.dev/api/forms/FormGroup)? Don't they both return the current value of the [FormGroup](https://angular.dev/api/forms/FormGroup)? Well, technically yes, but there's a gotcha case in which you won't get the expected value of the [FormGroup](https://angular.dev/api/forms/FormGroup)if you use the `.value` property.
+
+Let's setup a quick [FormGroup](https://angular.dev/api/forms/FormGroup) so that a user can input a zipCode and have the city and state auto populate in their respective fields and take a look.
+
+```typescript
+constructor(private fb: FormBuilder){}
+
+this.locationForm = this.fb.nonNullable.group({
+      state: [
+        { value: 'A Really Nice State', disabled: true },
+      ],
+      city: [
+        { value: 'Some Cool City', disabled: true },
+      ],
+      zipCode: [
+        '12345',
+        [Validators.minLength(5), Validators.maxLength(5)],
+      ],
+    });
+```
+
+Now that we have our [FormGroup](https://angular.dev/api/forms/FormGroup) set up and populated with a few FormControls that all have values, let's get the value of the entire [FormGroup](https://angular.dev/api/forms/FormGroup).
+
+```typescript
+const value = this.locationForm.value
+
+// value will equal {zipCode: '12345'}
+```
+
+Wait a minute. Why am I only getting the value for the zipCode FormControl?!?!
+
+The `city` and `state` are missing in the output even though they have values because they are in a `disabled` state. If I want to get all values I would have to do this...
+
+```typescript
+const value = this.locationForm.getRawValue()
+```
+
+In this case now `value` will contain all of the FormControl values:
+
+```typescript
+console.log('value =>', value) // value => {state: 'A Really Nice State', city: 'Some Cool City', zipCode: '12345'}
+```
+
+It's on of those things that you easily miss if you're not paying attention as the read the documentation. Here is the snippet for the `.value` property on for AbstractControl (the base class for FormControl, [FormGroup](https://angular.dev/api/forms/FormGroup), and FormArray)
+
+<Image src={screenshot1} alt="angular forms 1" />
+
+and the snippet for `getRawValue()` method for AbstractControl,
+
+<Image src={screenshot2} alt="angular forms 2" />
+
+and for [FormGroup](https://angular.dev/api/forms/FormGroup),
+
+<Image src={screenshot3} alt="angular forms 3" />
+
+#theMoreYouKnow!
