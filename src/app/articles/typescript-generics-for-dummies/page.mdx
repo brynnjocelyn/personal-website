@@ -1,0 +1,254 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import typescriptGenerics from './typescript-generics.jpeg'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2025-03-11',
+  title: 'A Dummies Guide to TypeScript Generics',
+  description:
+    'TypeScript generics are a powerful feature that allows you to write reusable and type-safe code. In this article, we will explore the basics of TypeScript generics and how you can use them in your projects.',
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={typescriptGenerics} alt="TypeScript Generics" />
+
+# TypeScript Generics for Dummies: A Simple Guide to Reusable Code
+
+Hey there! 👋 If you're new to TypeScript or just trying to wrap your head around generics, you're in the right place. Generics can seem a bit tricky at first, but once you get the hang of them, they’ll make your code more flexible, reusable, and type-safe. Think of this post as your friendly guide to understanding generics without all the jargon. Let’s break it down step by step!
+
+---
+
+## What Are Generics?
+
+Imagine you have a box. This box can hold anything: a number, a string, an object, or even another box! But here’s the catch: when you put something in, you want to make sure that what comes out is exactly the same type of thing. You don’t want to put in a string and accidentally get a number back—that would be confusing and could lead to errors.
+
+That’s where **generics** come in. Generics are like those flexible boxes in TypeScript. They allow you to write functions, classes, or interfaces that can work with any type, while still keeping things type-safe. Instead of writing separate code for each type, you write one piece of code that can handle many types. Cool, right?
+
+---
+
+## Why Do We Need Generics?
+
+Let’s say you want to write a simple function that takes an argument and returns it unchanged. Without generics, you might write something like this for numbers:
+
+```typescript
+function identity(arg: number): number {
+  return arg
+}
+```
+
+But what if you want the same function for strings? You’d have to write another one:
+
+```typescript
+function identity(arg: string): string {
+  return arg
+}
+```
+
+And another for booleans, and so on. That’s a lot of repeated code! 😅
+
+With generics, you can write a single function that works for any type:
+
+```typescript
+function identity<T>(arg: T): T {
+  return arg
+}
+```
+
+Here, `T` is a **type parameter**. It’s like a placeholder for whatever type you decide to use later. When you call this function, you can specify what `T` should be:
+
+```typescript
+let output = identity<string>('Hello') // T is string
+let anotherOutput = identity<number>(42) // T is number
+```
+
+Now, you have one function that can handle strings, numbers, or any other type you throw at it. Plus, TypeScript ensures that what goes in is what comes out—no surprises!
+
+---
+
+## How Do Generics Work?
+
+Let’s stick with our `identity` function example. When you use `<T>`, you’re telling TypeScript, “Hey, I’m going to use a type here, but I’ll decide what it is later.” Then, when you call the function, you can either specify the type explicitly (like `<string>` or `<number>`), or let TypeScript figure it out for you.
+
+For example:
+
+```typescript
+let output = identity('Hello') // TypeScript infers T as string
+```
+
+In this case, TypeScript is smart enough to see that you’re passing a string, so it automatically sets `T` to `string`. You don’t always have to write `<string>`—TypeScript often does the work for you. 🎉
+
+---
+
+## Generics with Classes
+
+Generics aren’t just for functions—they’re also super useful with classes. Let’s say you want to create a class that can hold a value of any type, like our box analogy earlier.
+
+Without generics, you might try something like this:
+
+```typescript
+class Box {
+  private value: any
+  constructor(value: any) {
+    this.value = value
+  }
+  getValue(): any {
+    return this.value
+  }
+}
+```
+
+But using `any` is like saying, “This box can hold anything, and I don’t care what it is.” The problem is, when you take the value out, TypeScript has no idea what type it is, so you lose all the benefits of type safety.
+
+With generics, you can make the box type-safe:
+
+```typescript
+class Box<T> {
+  private value: T
+  constructor(value: T) {
+    this.value = value
+  }
+  getValue(): T {
+    return this.value
+  }
+}
+```
+
+Now, when you create a box, you specify the type it holds:
+
+```typescript
+let stringBox = new Box<string>('Hello')
+let numberBox = new Box<number>(42)
+```
+
+TypeScript knows that `stringBox.getValue()` returns a string, and `numberBox.getValue()` returns a number. If you try to put the wrong type in, TypeScript will catch it and give you an error. That’s the power of generics—flexibility with safety! 🛡️
+
+---
+
+## Constraining Generics: Adding Rules to Your Types
+
+Sometimes, you don’t want your generic to work with _any_ type—you want to limit it to certain types that have specific properties. For example, maybe you want a function that only works with types that have a `length` property, like strings or arrays.
+
+You can do that with **constraints**. Constraints let you say, “Hey, this generic type `T` must have certain features.”
+
+Let’s create an interface that defines what we need:
+
+```typescript
+interface HasLength {
+  length: number
+}
+```
+
+Now, we can write a generic function that only accepts types with a `length` property:
+
+```typescript
+function logLength<T extends HasLength>(arg: T): void {
+  console.log(arg.length)
+}
+```
+
+Here, `T extends HasLength` means that `T` must have a `length` property. So, you can pass a string or an array:
+
+```typescript
+logLength('Hello') // Works, outputs 5
+logLength([1, 2, 3]) // Works, outputs 3
+```
+
+But if you try to pass a number, which doesn’t have `length`, TypeScript will stop you:
+
+```typescript
+logLength(42) // Error: number doesn't have 'length'
+```
+
+This way, you can make your generics more specific while still keeping them flexible.
+
+---
+
+## Generic Interfaces: Flexible Blueprints
+
+You can also use generics with interfaces to create flexible blueprints for your data. For example, let’s say you want to define a pair of values, but the types of those values can be different.
+
+Here’s how you can do it:
+
+```typescript
+interface Pair<T, U> {
+  first: T
+  second: U
+}
+```
+
+Now, you can create pairs with any combination of types:
+
+```typescript
+let stringNumberPair: Pair<string, number> = { first: 'Hello', second: 42 }
+let booleanStringPair: Pair<boolean, string> = { first: true, second: 'World' }
+```
+
+TypeScript ensures that `first` and `second` are always the correct types for each pair. It’s like having a customizable template for your data structures.
+
+---
+
+## Real-World Example: Safe Property Access
+
+Let’s look at a more practical example. Suppose you want to write a function that gets a property from an object, but you want to make sure the property actually exists on that object.
+
+With generics, you can do this safely:
+
+```typescript
+function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
+  return obj[key]
+}
+```
+
+Here, `K extends keyof T` means that `K` must be a key of the type `T`. So, when you call this function, TypeScript checks that the key you’re asking for actually exists on the object.
+
+For example:
+
+```typescript
+let person = { name: 'Alice', age: 30 }
+let name = getProperty(person, 'name') // Returns string
+let age = getProperty(person, 'age') // Returns number
+```
+
+If you try to access a property that doesn’t exist, TypeScript will give you an error:
+
+```typescript
+let invalid = getProperty(person, 'address') // Error: "address" is not a key of person
+```
+
+This is a great way to prevent bugs and make your code more reliable.
+
+---
+
+## When to Use Generics
+
+Generics are incredibly useful, but like any tool, they should be used wisely. Here are a few scenarios where generics shine:
+
+- When you need to write reusable code that works with multiple types.
+- When you want to maintain type safety without sacrificing flexibility.
+- When you’re building libraries or components that others will use with different types.
+
+However, if your code only deals with one specific type, you might not need generics. Keep it simple when you can!
+
+---
+
+## Wrapping Up
+
+Generics might seem a bit magical at first, but they’re really just a way to make your code more flexible and reusable. By using type parameters, you can write functions, classes, and interfaces that work with any type while keeping everything type-safe.
+
+Here’s a quick recap:
+
+- **Generics** let you create reusable code for different types.
+- **Type parameters** (like `<T>`) act as placeholders for types.
+- **Constraints** (like `T extends HasLength`) let you limit which types can be used.
+- **Generic interfaces** help you define flexible data structures.
+- Use generics when you need flexibility and type safety, but keep it simple when possible.
+
+Now that you’ve got the basics down, try playing around with generics in your own code. Start small, and soon you’ll be writing more powerful, reusable TypeScript like a pro! 🚀
+
+I hope this guide has made TypeScript generics crystal clear for you. Happy coding! 😊
