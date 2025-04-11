@@ -1,0 +1,168 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+import tracingRxjsFlow from './tracing_rxjs_flow.png'
+
+export const article = {
+  author: 'Jocelyn Knight',
+  date: '2025-04-11',
+  title: 'A Lesson in Conditional Logic and Observable Flows: Debugging RxJS in Action',
+  description:
+'While working through a complex piece of TypeScript code involving RxJS observables, I encountered a situation that offered a valuable lesson in understanding conditional logic, observable transformations, and the importance of clear intent in code design. Below, I’ll distill this experience into a blog post that captures the key takeaway—without using the original proprietary function names or code verbatim—and present it in a way that’s broadly applicable to developers working with reactive programming or conditional workflows.'
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+<Image src={tracingRxjsFlow} alt="Tracing RxJS Flow" />
+
+---
+
+## The Power of Tracing Conditional Paths in Reactive Code
+
+When dealing with reactive programming frameworks like RxJS, it’s easy to get lost in the stream of operators and transformations. Recently, I found myself debugging a piece of code that managed dynamic component removal in a workflow system. The behavior wasn’t aligning with my initial expectations, and it took a step-by-step breakdown to uncover why. The lesson I learned? **Always trace the full path of your conditions and observables—they might reveal exactly what you’re missing.**
+
+### The Scenario
+
+Imagine you’re building a system where components can be deleted from a workflow interface. Some components require a confirmation dialog before removal, while others should be removed immediately. The logic is driven by an observable stream that processes user actions, applies conditions, and transforms data accordingly. Here’s a simplified version of what I was working with:
+
+```typescript
+import { Observable, of, iif, combineLatestWith } from 'rxjs';
+import { switchMap, filter, tap } from 'rxjs/operators';
+
+class WorkflowService {
+  private dialogInProgress = false;
+  private actionStream$: Observable<Action>;
+
+  constructor(private apiService: ApiService) {
+    this.actionStream$ = this.setupActionHandler();
+  }
+
+  private setupActionHandler(): Observable<Action> {
+    const IMMEDIATE_REMOVE_TYPES = ['TEXT', 'IMAGE'];
+
+    return this.actionStream$.pipe(
+      filter((action) => 
+        action.type === 'remove' && 
+        !this.dialogInProgress && 
+        !this.isInputFocused()
+      ),
+      switchMap((action) =>
+        iif(
+          () => this.isSpecialData(action.data),
+          of([action]),
+          of(action).pipe(
+            combineLatestWith(this.apiService.acquireLock(action.itemId))
+          )
+        )
+      ),
+      switchMap(([action]) =>
+        iif(
+          () => IMMEDIATE_REMOVE_TYPES.includes(action.data.type) || this.isSpecialData(action.data),
+          of(action),
+          this.showConfirmationDialog(action).pipe(
+            tap(() => {
+              this.dialogInProgress = false;
+              this.apiService.releaseLock(action.itemId);
+            }),
+            filter((confirmed) => confirmed)
+          )
+        )
+      ),
+      tap((action) => this.removeComponent(action))
+    );
+  }
+
+  private isSpecialData(data: any): boolean {
+    return data.isSpecial || false;
+  }
+
+  private isInputFocused(): boolean {
+    const active = document.activeElement;
+    return active?.tagName === 'INPUT' || active?.tagName === 'TEXTAREA';
+  }
+
+  private showConfirmationDialog(action: Action): Observable<boolean> {
+    this.dialogInProgress = true;
+    return new Observable((observer) => {
+      const confirmed = confirm(`Delete ${action.data.type}?`);
+      observer.next(confirmed);
+      observer.complete();
+    });
+  }
+
+  private removeComponent(action: Action) {
+    console.log(`Removing component of type: ${action.data.type}`);
+  }
+}
+
+interface Action {
+  type: string;
+  itemId: string;
+  data: { type: string; isSpecial?: boolean };
+}
+
+class ApiService {
+  acquireLock(itemId: string): Observable<boolean> {
+    return of(true);
+  }
+  releaseLock(itemId: string) {}
+}
+```
+
+In this example, `setupActionHandler` processes a stream of actions. It filters for "remove" actions, checks some preconditions, and then uses RxJS’s `iif` operator to decide whether to lock an item or proceed directly. A second `iif` determines whether to skip a confirmation dialog based on the component type or data properties.
+
+### The Problem
+
+I noticed that for components of type `"TEXT"`, the `dialogInProgress` flag wasn’t being set to `true`, even though I expected a confirmation dialog to appear. The removal happened instantly, bypassing the dialog logic entirely. Why?
+
+### The Investigation
+
+To solve this, I traced the flow:
+
+1. **Initial Filtering**: The action passed the `filter` stage—it was a "remove" action, no dialog was in progress, and no input was focused.
+2. **First `switchMap`**: The `iif` checked if the data was "special." In my case, it wasn’t, so it paired the action with a lock via `combineLatestWith`. This emitted `[action, lockResult]`, but the next `switchMap` destructured it as `([action])`, grabbing just the action.
+3. **Second `switchMap`**: Here, the second `iif` evaluated:
+   - Condition: `IMMEDIATE_REMOVE_TYPES.includes(action.data.type) || this.isSpecialData(action.data)`.
+   - Since `"TEXT"` was in `IMMEDIATE_REMOVE_TYPES`, the condition was `true`.
+   - Result: It emitted `of(action)` directly, skipping the dialog logic.
+
+The `showConfirmationDialog` method—where `dialogInProgress` gets set—was never called because `"TEXT"` triggered the "immediate removal" path.
+
+### The Lesson
+
+The root cause was clear: the condition explicitly bypassed the dialog for certain types, including `"TEXT"`. My expectation didn’t match the code’s design. This taught me a critical lesson:
+
+**When working with conditional logic in reactive streams, meticulously trace every path your data can take. Assumptions about behavior can mislead you—let the code tell the story.**
+
+Here’s why this matters:
+- **RxJS Operators Amplify Complexity**: Operators like `switchMap` and `iif` transform data in ways that can obscure intent. Destructuring `[action]` from `[action, lockResult]` silently ignored the lock, which could’ve been a bug in another context.
+- **Conditions Drive Outcomes**: The inclusion of `"TEXT"` in `IMMEDIATE_REMOVE_TYPES` was intentional, but without tracing it, I assumed all removals required confirmation.
+- **Debugging Requires Patience**: Breaking down the stream step-by-step revealed the truth. Console logs or RxJS’s `tap` operator can be lifesavers here.
+
+### Applying the Lesson
+
+To avoid similar confusion:
+1. **Document Intent**: Add comments or refactor conditions for clarity. For example:
+   ```typescript
+   iif(
+     () => {
+       const skipDialog = IMMEDIATE_REMOVE_TYPES.includes(action.data.type) || this.isSpecialData(action.data);
+       return skipDialog; // True means no confirmation needed
+     },
+     of(action),
+     this.showConfirmationDialog(action)...
+   )
+   ```
+2. **Test Edge Cases**: Write unit tests for each path—immediate removal, locked items, dialog confirmation—to ensure behavior matches expectations.
+3. **Trace Flows**: When debugging, map out the observable chain manually or use tools like RxJS marble diagrams.
+
+### Conclusion
+
+Reactive programming is powerful, but it demands precision. This experience reinforced that tracing conditional paths isn’t just a debugging tactic—it’s a mindset. Whether you’re managing UI workflows or API calls, let the code guide you to the answer. In my case, the system worked as designed; I just needed to see it clearly.
+
+Next time you’re puzzled by a stream’s behavior, slow down, follow the data, and trust the logic. The lesson isn’t just in the fix—it’s in the journey to understanding.
+
+--- 
