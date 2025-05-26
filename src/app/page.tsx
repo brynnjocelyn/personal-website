@@ -55,6 +55,25 @@ function ArrowDownIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   )
 }
 
+function EyeIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+      <path
+        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 function Article({ article }: { article: ArticleWithSlug }) {
   return (
     <Card as="article">
@@ -182,17 +201,27 @@ function Resume() {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button
-        href="./jocelyn-knight-resume.pdf"
-        variant="secondary"
-        className="group mt-6 w-full"
-        download
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Download Resume
-        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
-      </Button>
+      <div className="mt-6 flex gap-3">
+        <Button
+          href="/resume"
+          variant="secondary"
+          className="group flex-1"
+        >
+          View Resume
+          <EyeIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+        </Button>
+        <Button
+          href="./jocelyn-knight-resume.pdf"
+          variant="secondary"
+          className="group flex-1"
+          download
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Download
+          <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
+        </Button>
+      </div>
     </div>
   )
 }
