@@ -17,6 +17,7 @@ import image5 from '@/images/jocelyninvegas_S3bknight-personal-photosIMG_3632.JP
 import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 import { Button } from '@/components/Button'
+import { TrackedButton } from '@/components/TrackedButton'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
 function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -210,17 +211,19 @@ function Resume() {
           View Resume
           <EyeIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
         </Button>
-        <Button
+        <TrackedButton
           href="./jocelyn-knight-resume.pdf"
           variant="secondary"
           className="group flex-1"
           download
           target="_blank"
           rel="noopener noreferrer"
+          trackingSource="home"
+          trackingAction="download"
         >
           Download
           <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
-        </Button>
+        </TrackedButton>
       </div>
     </div>
   )
