@@ -8,6 +8,7 @@ import { Container } from '@/components/Container'
 import { Prose } from '@/components/Prose'
 import { type ArticleWithSlug } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
+import { JsonLd, createArticleSchema } from '@/components/JsonLd'
 
 function ArrowLeftIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -32,10 +33,19 @@ export function ArticleLayout({
   let router = useRouter()
   let { previousPathname } = useContext(AppContext)
 
+  const articleSchema = createArticleSchema({
+    title: article.title,
+    description: article.description,
+    date: article.date,
+    slug: article.slug,
+  })
+
   return (
-    <Container className="mt-16 lg:mt-32">
-      <div className="xl:relative">
-        <div className="mx-auto max-w-2xl">
+    <>
+      <JsonLd data={articleSchema} />
+      <Container className="mt-16 lg:mt-32">
+        <div className="xl:relative">
+          <div className="mx-auto max-w-2xl">
           {previousPathname && (
             <button
               type="button"
@@ -66,5 +76,6 @@ export function ArticleLayout({
         </div>
       </div>
     </Container>
+    </>
   )
 }
